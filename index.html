@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tempo restante do teste</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500&display=swap" />
+</head>
+<body style="margin:0;background:transparent;">
+
+  <div role="timer" aria-label="Tempo restante do teste" style="width:100%;max-width:564px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px;font-family:'Figtree',system-ui,-apple-system,'Segoe UI',sans-serif;color:#000000;box-sizing:border-box;">
+    <div style="height:96px;border-radius:16px;background:#F2F3F3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;">
+      <span id="intl-d" style="font-size:32px;font-weight:500;line-height:1;font-variant-numeric:tabular-nums;">--</span>
+      <span style="font-size:16px;line-height:1.2;">dias</span>
+    </div>
+    <div style="height:96px;border-radius:16px;background:#F2F3F3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;">
+      <span id="intl-h" style="font-size:32px;font-weight:500;line-height:1;font-variant-numeric:tabular-nums;">--</span>
+      <span style="font-size:16px;line-height:1.2;">horas</span>
+    </div>
+    <div style="height:96px;border-radius:16px;background:#F2F3F3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;">
+      <span id="intl-m" style="font-size:32px;font-weight:500;line-height:1;font-variant-numeric:tabular-nums;">--</span>
+      <span style="font-size:16px;line-height:1.2;">min</span>
+    </div>
+    <div style="height:96px;border-radius:16px;background:#F2F3F3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;">
+      <span id="intl-s" style="font-size:32px;font-weight:500;line-height:1;font-variant-numeric:tabular-nums;">--</span>
+      <span style="font-size:16px;line-height:1.2;">seg</span>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      // Término: 03/11/2026 às 23:59 (horário de Brasília, UTC-03:00)
+      var end = new Date('2026-11-03T23:59:59-03:00');
+
+      var d = document.getElementById('intl-d');
+      var h = document.getElementById('intl-h');
+      var m = document.getElementById('intl-m');
+      var s = document.getElementById('intl-s');
+
+      function pad(n) { return String(n).padStart(2, '0'); }
+
+      function tick() {
+        var diff = end - new Date();
+        if (diff <= 0) {
+          d.textContent = h.textContent = m.textContent = s.textContent = '00';
+          return;
+        }
+        d.textContent = pad(Math.floor(diff / 86400000));
+        h.textContent = pad(Math.floor((diff % 86400000) / 3600000));
+        m.textContent = pad(Math.floor((diff % 3600000) / 60000));
+        s.textContent = pad(Math.floor((diff % 60000) / 1000));
+      }
+
+      tick();
+      setInterval(tick, 1000);
+    })();
+  </script>
+</body>
+</html>
